@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println(myAtoi("20000000000000000000"))
+	fmt.Println(myAtoi("-9223372036854775809"))
 }
 
 func myAtoi(s string) int {
@@ -63,27 +63,31 @@ func myAtoi(s string) int {
 	maxInt := math.Pow(2, 31) - 1
 	minInt := math.Pow(-2, 31)
 
-	ret := 0
-	fmt.Println(nums)
+	var ret int64
+	ret = 0
 	for i := 0; i < len(nums); i++ {
-		tmpInt := (int(nums[i]) - 48)
+		tmpInt := (int64(nums[i]) - 48)
 		if tmpInt != 0 {
 			if (len(nums) - i - 1) > 10 {
-				return int(maxInt)
+				if sign == 1 {
+					return int(maxInt)
+				} else {
+					return int(minInt)
+				}
 			}
 		}
-		ret = ret + tmpInt*(int(math.Pow(10, float64(len(nums)-i-1))))
+		ret = ret + tmpInt*(int64(math.Pow(10, float64(len(nums)-i-1))))
 		fmt.Println(ret)
 		if sign == 1 {
-			if ret > int(maxInt) {
+			if ret > int64(maxInt) {
 				return int(maxInt)
 			}
 		} else {
-			if ret*-1 < int(minInt) {
+			if ret*-1 < int64(minInt) {
 				return int(minInt)
 			}
 		}
 	}
 
-	return ret * sign
+	return (int)(ret) * sign
 }
